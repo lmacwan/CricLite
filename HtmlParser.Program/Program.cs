@@ -11,8 +11,8 @@ namespace HtmlParser.Program
         static void Main(string[] args)
         {
             PlayerManager.Go();
-            Parser.GetPlayerXML(36084);
-            Parser.GetPlayerXML(36084);
+            Player.Get(36084);
+            Player.Get(36084);
         }
     }
 }

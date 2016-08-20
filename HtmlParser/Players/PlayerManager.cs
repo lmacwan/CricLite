@@ -1,29 +1,13 @@
-﻿using HtmlAgilityPack;
-using HtmlParser.DTO;
-using HtmlParser.DTO.Player;
+﻿using HtmlParser.DTO.Player;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace HtmlParser
 {
-    public class Parser
-    {
-        public static void GetPlayerXML(int unique_id)
-        {
-            var url = ConfigurationManager.AppSettings["PlayerInfoURL"].ToString();
-            url = url + unique_id;
-            var obj = PlayerManager.Get(unique_id.ToString());
-        }
-    }
-
     public class PlayerManager
     {
         #region Data Members
@@ -161,13 +145,5 @@ namespace HtmlParser
         }
         #endregion
 
-    }
-
-    public class API
-    {
-        public static string Read(string url)
-        {
-            return new WebClient().DownloadString(url);
-        }
     }
 }

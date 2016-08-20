@@ -48,8 +48,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="API\API.cs" />
     <Compile Include="Enums\CacheState.cs" />
+    <Compile Include="Players\Player.cs" />
+    <Compile Include="Players\PlayerManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
