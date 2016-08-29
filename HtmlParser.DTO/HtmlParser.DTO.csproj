@@ -43,10 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DTO\TeamDTO.cs" />
+    <Compile Include="DTO\Match\MatchCalendarListItemDTO.cs" />
+    <Compile Include="DTO\Match\MatchListItemDTO.cs" />
+    <Compile Include="DTO\Match\UpcomingMatchListItemDTO.cs" />
     <Compile Include="Enums\BatingStyle.cs" />
     <Compile Include="Enums\BowlingStyle.cs" />
-    <Compile Include="DTO\PlayerInfo.cs" />
+    <Compile Include="DTO\Player\PlayerInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

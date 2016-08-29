@@ -50,8 +50,8 @@
   <ItemGroup>
     <Compile Include="API\API.cs" />
     <Compile Include="Enums\CacheState.cs" />
-    <Compile Include="Players\Player.cs" />
-    <Compile Include="Players\PlayerManager.cs" />
+    <Compile Include="Managers\MatchManager.cs" />
+    <Compile Include="Managers\PlayerManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
