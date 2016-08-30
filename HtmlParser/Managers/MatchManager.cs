@@ -18,7 +18,7 @@ namespace HtmlParser.Managers
 
         public static void Initialize()
         {
-            checkedForliveMatch = DateTime.MinValue;
+            checkedForCurrentMatch = DateTime.MinValue;
             checkedForUpcomingMatch = DateTime.MinValue.Date;
             checkedForMatchCalendar = DateTime.MinValue.Date;
 
@@ -28,10 +28,10 @@ namespace HtmlParser.Managers
                 Directory.CreateDirectory(allMatchesDirectory);
             }
 
-            allLiveMatchesFilePath = Path.Combine(allMatchesDirectory, "Live.txt");
-            if (File.Exists(allLiveMatchesFilePath) == false)
+            allCurrentMatchesFilePath = Path.Combine(allMatchesDirectory, "Live.txt");
+            if (File.Exists(allCurrentMatchesFilePath) == false)
             {
-                File.Create(allLiveMatchesFilePath);
+                File.Create(allCurrentMatchesFilePath);
             }
 
             allUpcomingMatchesFilePath = Path.Combine(allMatchesDirectory, "Upcoming.txt");
@@ -47,64 +47,74 @@ namespace HtmlParser.Managers
             }
         }
 
-        #region Live Matches
+        #region Current Matches
 
-        private static DateTime checkedForliveMatch;
-        private static string allLiveMatchesFilePath;
-        private static string allLiveMatchesContent = "";
+        private static DateTime checkedForCurrentMatch;
+        private static string allCurrentMatchesFilePath;
+        private static string allCurrentMatchesContent = "";
 
-        public static List<MatchListItemDTO> GetLiveMatches()
+        public static List<MatchListItemDTO> GetCurrentMatches()
         {
-            if (IsReadFromFile_LiveMatch(DateTime.Now))
+            if (IsReadFromFile_CurrentMatch(DateTime.Now))
             {
-                var items = ReadFromFile_AllLive();
-                return items ?? DownloadLiveMatches();
+                var items = ReadFromFile_AllCurrent();
+                return items ?? DownloadCurrentMatches();
             }
             else
             {
-                return DownloadLiveMatches();
+                return DownloadCurrentMatches();
             }
         }
 
-        private static bool IsReadFromFile_LiveMatch(DateTime date)
+        private static bool IsReadFromFile_CurrentMatch(DateTime date)
         {
-            return checkedForliveMatch.AddSeconds(20) > date;
+            return checkedForCurrentMatch.AddSeconds(20) > date;
         }
 
-        private static List<MatchListItemDTO> ReadFromFile_AllLive()
+        private static List<MatchListItemDTO> ReadFromFile_AllCurrent()
         {
-            var content = File.ReadAllText(allLiveMatchesFilePath);
+            var content = File.ReadAllText(allCurrentMatchesFilePath);
             HtmlParser.DTO.Match.RootObject matchRootObj = JsonConvert.DeserializeObject<HtmlParser.DTO.Match.RootObject>(content);
             return matchRootObj == null ? new List<MatchListItemDTO>() : matchRootObj.Items;
         }
 
-        private static List<MatchListItemDTO> DownloadLiveMatches()
+        private static List<MatchListItemDTO> DownloadCurrentMatches()
         {
-            var content = API.Read(ConfigurationManager.AppSettings["LiveMatchesInfoURL"]);
-            checkedForliveMatch = DateTime.Now;
+            var content = API.Read(ConfigurationManager.AppSettings["CurrentMatchesInfoURL"]);
+            checkedForCurrentMatch = DateTime.Now;
 
-            if (allLiveMatchesContent != content)
+            if (allCurrentMatchesContent != content)
             {
-                allLiveMatchesContent = content;
-                new Thread(WriteLiveContentToDisk).Start();
+                allCurrentMatchesContent = content;
+                new Thread(CurrentMacthThreadStart).Start();
             }
 
             HtmlParser.DTO.Match.RootObject matchRootObj = JsonConvert.DeserializeObject<HtmlParser.DTO.Match.RootObject>(content);
             return matchRootObj.Items ?? new List<MatchListItemDTO>();
         }
 
-        private static void WriteLiveContentToDisk()
+        private static void CurrentMacthThreadStart()
         {
-            using (StreamWriter writer = File.CreateText(allLiveMatchesFilePath))
+            WriteCurrentMatchContent();
+            UpdateCurrentMatchList();
+
+            Thread.CurrentThread.Abort();
+        }
+
+        private static void WriteCurrentMatchContent()
+        {
+            using (StreamWriter writer = File.CreateText(allCurrentMatchesFilePath))
             {
-                writer.Write(allLiveMatchesContent);
+                writer.Write(allCurrentMatchesContent);
                 writer.Flush();
                 writer.Close();
-
-                Thread.CurrentThread.Abort();
             }
         }
 
+        private static void UpdateCurrentMatchList()
+        {
+
+        }
         #endregion
 
         #region Upcoming Matches
@@ -228,9 +238,9 @@ namespace HtmlParser.Managers
         #endregion
 
         #region Match By Id
-        private static Dictionary<string, string> liveMatches = null;
+        private static Dictionary<string, string> CurrentMatches = null;
 
-        public static void GetLiveMatch(string uniqueId)
+        public static void GetCurrentMatch(string uniqueId)
         {
 
         }
