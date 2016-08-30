@@ -52,6 +52,9 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="bin\Debug\HtmlParser.Program.exe.config" />
+    <None Include="bin\Debug\HtmlParser.Program.vshost.exe.config" />
+    <None Include="bin\Debug\HtmlParser.Program.vshost.exe.manifest" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HtmlParser.DTO\HtmlParser.DTO.csproj">
@@ -62,6 +65,18 @@
       <Project>{0c93a422-6c14-4bb8-a89d-d309a75c0bba}</Project>
       <Name>HtmlParser</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\HtmlParser.dll" />
+    <Content Include="bin\Debug\HtmlParser.DTO.dll" />
+    <Content Include="bin\Debug\HtmlParser.DTO.pdb" />
+    <Content Include="bin\Debug\HtmlParser.pdb" />
+    <Content Include="bin\Debug\HtmlParser.Program.exe" />
+    <Content Include="bin\Debug\HtmlParser.Program.pdb" />
+    <Content Include="bin\Debug\HtmlParser.Program.vshost.exe" />
+    <Content Include="bin\Debug\Newtonsoft.Json.dll" />
+    <Content Include="bin\Debug\Newtonsoft.Json.pdb" />
+    <Content Include="bin\Debug\Newtonsoft.Json.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
